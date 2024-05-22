@@ -1,0 +1,27 @@
+<div class="flex flex-wrap justify-center items-center" *ngIf="!loading">
+  <app-subcategory *ngFor="let subcategory of subcategories"
+             [subcategoryName]="subcategory.name"
+             [subcategoryType]="subcategory.type"
+             [subcategoryId]="subcategory.subcategoryId" />
+
+  <ng-container *ngIf="!error">
+    <div *ngIf="subcategories.length === 0" class="card w-96 bg-base-100 shadow-xl m-3 mt-5 text-center border-2 p-4">
+      <h3 class="text-lg font-semibold">Brak podkategorii</h3>
+      <p>Nie masz jeszcze żadnych podkategorii. Utwórz jakąś.</p>
+      <button class="btn btn-primary" (click)="onSubcategoryCreate()">Utwórz podkategorię</button>
+    </div>
+
+    <button class="btn gap-2 btn-outline hover:btn-primary" *ngIf="subcategories.length >= 1" (click)="onSubcategoryCreate()">
+      <span class="font-extrabold">+</span>
+      <ng-container>Utwórz</ng-container>
+    </button>
+
+    <app-subcategory-edit *ngIf="subcategoryCreating" (close)="subcategoryCreating = false" (subcategoryCreated)="fetchSubcategories()"/>
+  </ng-container>
+
+  <app-error-alert *ngIf="error" (tryAgain)="fetchSubcategories()" />
+</div>
+
+<div class="mt-10" *ngIf="loading">
+  <app-spinner />
+</div>

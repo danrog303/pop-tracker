@@ -1,0 +1,123 @@
+<app-spinner *ngIf="loading" />
+
+<div class="flex flex-row-reverse p-5" *ngIf="!error">
+    <button class="btn btn-sm gap-2 mx-2" (click)="onSubcategoryDelete()">
+        <app-icon-delete />
+        <ng-container>Usuń podkategorię</ng-container>
+    </button>
+
+    <button class="btn btn-sm gap-2 mx-2" (click)="onSubcategoryEdit()">
+        <app-icon-edit />
+        <ng-container>Edytuj podkategorię</ng-container>
+    </button>
+
+    <button class="btn btn-sm gap-2 mx-2" (click)="onSubcategoryItemCreate()">
+        <app-icon-add />
+        <ng-container>Dodaj nowy obiekt</ng-container>
+    </button>
+
+    <label class="input input-sm input-bordered flex items-center gap-2">
+      <input type="text" class="grow" placeholder="Szukaj" [(ngModel)]="filterQuery" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
+    </label>
+</div>
+
+<app-error-alert *ngIf="error" (tryAgain)="refreshSubcategoryDetails()" />
+
+<app-subcategory-edit *ngIf="editingSubcategory" [editedSubcategory]="subcategory" (close)="this.editingSubcategory = false" />
+<app-subcategory-delete *ngIf="deletingSubcategory" [subcategoryToDelete]="subcategory" (close)="this.deletingSubcategory = false" />
+
+<app-subcategory-item-edit *ngIf="editingSubcategoryItem" (close)="this.editingSubcategoryItem = false"
+                     [editedItem]="editedSubcategoryItem" [subcategoryId]="subcategory?.subcategoryId ?? ''"
+                     (itemSaved)="refreshSubcategoryDetails()" [subcategoryType]="subcategory?.type ?? SubcategoryType.BOOK"/>
+
+<app-subcategory-item-delete *ngIf="deletingSubcategoryItem" [subcategoryId]="subcategory?.subcategoryId ?? ''" [itemToDelete]="deletedSubcategoryItem"
+                       (close)="this.deletingSubcategoryItem = false" (itemDeleted)="refreshSubcategoryDetails()" />
+
+<div class="overflow-x-auto w-full" *ngIf="!loading && subcategory !== null && !error">
+    <table class="table w-full">
+        <thead class="bg-base-100">
+        <tr>
+            <th>Tytuł</th>
+            <th>Kiedy dodano?</th>
+            <th>Status</th>
+            <th>Ocena</th>
+
+            <th *ngIf="subcategory.type == SubcategoryType.BOOK">Autor</th>
+            <th *ngIf="subcategory.type == SubcategoryType.BOOK">Liczba stron</th>
+
+            <th *ngIf="subcategory.type == SubcategoryType.GAME">% przejścia</th>
+            <th *ngIf="subcategory.type == SubcategoryType.GAME">Platforma</th>
+
+            <th *ngIf="subcategory.type == SubcategoryType.MOVIE">Reżyser</th>
+
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let subcategoryItem of getFilteredSubcategoryItems()">
+            <td>
+                {{ subcategoryItem.name }}
+            </td>
+
+            <td>
+                {{ subcategoryItem.entryCreationDate | date:'dd.MM.yyyy, HH:mm' }}
+            </td>
+
+            <td [ngSwitch]="subcategoryItem.status">
+                <span *ngSwitchCase="'PLANNED'" class="badge badge-info gap-2">Planowany</span>
+                <span *ngSwitchCase="'DROPPED'" class="badge badge-error gap-2">Porzucony</span>
+                <span *ngSwitchCase="'FINISHED'" class="badge badge-success gap-2">Ukończony</span>
+                <span *ngSwitchCase="'STALLED'" class="badge badge-warning gap-2">Wstrzymany</span>
+                <span *ngSwitchCase="'IN_PROGRESS'" class="badge badge-primary gap-2">W trakcie</span>
+            </td>
+
+            <td>
+                <div class="rating rating-sm rating-half cursor-not-allowed">
+                    <input disabled type="radio" class="rating-hidden" [checked]="subcategoryItem.rating === 0 || subcategoryItem.status === 'PLANNED'" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-1" [checked]="subcategoryItem.rating === 1" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-2" [checked]="subcategoryItem.rating === 2" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-1" [checked]="subcategoryItem.rating === 3" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-2" [checked]="subcategoryItem.rating === 4" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-1" [checked]="subcategoryItem.rating === 5" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-2" [checked]="subcategoryItem.rating === 6" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-1" [checked]="subcategoryItem.rating === 7" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-2" [checked]="subcategoryItem.rating === 8" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-1" [checked]="subcategoryItem.rating === 9" />
+                    <input disabled type="radio" class="bg-primary mask mask-star-2 mask-half-2" [checked]="subcategoryItem.rating === 10" />
+                </div>
+            </td>
+
+            <td *ngIf="subcategory.type === SubcategoryType.BOOK">
+                {{ subcategoryItem.author }}
+            </td>
+
+            <td *ngIf="subcategory.type === SubcategoryType.BOOK">
+                {{ subcategoryItem.pagesNumber }}
+            </td>
+
+            <td *ngIf="subcategory.type === SubcategoryType.GAME">
+                {{ subcategoryItem.percentage }}%
+            </td>
+
+            <td *ngIf="subcategory.type === SubcategoryType.GAME">
+                {{ subcategoryItem.platform }}
+            </td>
+
+            <td *ngIf="subcategory.type === SubcategoryType.MOVIE">
+                {{ subcategoryItem.director }}
+            </td>
+
+            <td>
+                <button class="btn btn-danger btn-xs mr-1" (click)="onSubcategoryItemDelete(subcategoryItem)">Usuń</button>
+                <button class="btn btn-primary btn-xs" (click)="onSubcategoryItemEdit(subcategoryItem)">Edytuj</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p class="text-center font-semibold my-6" *ngIf="subcategoryItems.length === 0">
+        Nie masz jeszcze żadnych przedmiotów.
+        Dodaj jakiś.
+    </p>
+</div>

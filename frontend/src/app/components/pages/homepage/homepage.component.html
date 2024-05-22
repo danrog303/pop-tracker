@@ -1,0 +1,26 @@
+<div class="w-full">
+  <div class="flex bg-white" style="height:600px;">
+    <div class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2">
+      <div>
+        <h2 class="text-xl">PopTracker</h2>
+        <p class="mt-2 text-sm text-gray-500 md:text-base">
+          Otwartoźródłowa aplikacja do zarządzania grami, książkami i filmami.
+        </p>
+        <div class="flex justify-center lg:justify-start mt-4">
+          <button class="btn btn-primary" (click)="onAuthenticate()" *ngIf="!isUserAuthenticated">
+            Zaloguj się
+          </button>
+
+          <a class="btn btn-primary" routerLink="/subcategories" *ngIf="isUserAuthenticated">
+            Przejdź do aplikacji
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="hidden lg:block lg:w-1/2" style="clip-path:polygon(10% 0, 100% 0%, 100% 100%, 0 100%)">
+      <div class="h-full object-cover" style="background-image: url(/assets/shelf-landing.jpg)">
+        <div class="h-full"></div>
+      </div>
+    </div>
+  </div>
+</div>

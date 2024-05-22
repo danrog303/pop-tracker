@@ -1,0 +1,58 @@
+<div class="modal modal-open">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">
+            {{ editMode ? "Edytowanie podkategorii" : "Tworzenie podkategorii" }}
+        </h3>
+
+        <form (ngSubmit)="onSubcategorySave(subcategoryEditForm)" #subcategoryEditForm="ngForm">
+            <div class="form-control w-full max-w-xs">
+                <label class="label" for="subcategory-edit-name">
+                  <span class="label-text">
+                    <ng-container>Nazwa podkategorii</ng-container> (*)
+                  </span>
+                </label>
+
+                <input [ngModel]="editedSubcategory?.name" type="text" class="input input-bordered w-full max-w-xs"
+                       name="subcategoryName" id="subcategory-edit-name" minlength="3" maxlength="64" required/>
+
+                <ng-container *ngIf="!editMode">
+                    <label class="label" for="subcategory-edit-icon">
+                      <span class="label-text">
+                        <ng-container>Rodzaj</ng-container> (*)
+                      </span>
+                    </label>
+
+                    <select class="select select-bordered w-full max-w-xs" name="subcategoryType"
+                            [ngModel]="editedSubcategory?.type ?? 'GAME'" id="subcategory-edit-icon" required>
+                        <option value="GAME">
+                            Gra
+                        </option>
+                        <option value="BOOK">
+                            Książka
+                        </option>
+                        <option value="MOVIE">
+                            Film lub serial
+                        </option>
+                    </select>
+                </ng-container>
+
+                <p class="text-error pt-3" *ngIf="error">
+                    Wystąpił błąd podczas zapisywania.
+                    <strong>Spróbuj ponownie</strong> lub skontaktuj się z administratorem.
+                </p>
+
+                <p class="pt-3" *ngIf="quotaExceeded">
+                    Przekroczyłeś dozwoloną ilośc obiektów. Aby dodać nowy, usuń jeden z istniejących.
+                </p>
+            </div>
+
+            <div class="modal-action">
+                <button class="btn" type="button" (click)="this.close.emit()">Anuluj</button>
+                <button class="btn btn-primary" type="submit" [disabled]="!subcategoryEditForm.valid">
+                    <app-spinner *ngIf="saving"/>
+                    <span *ngIf="!saving">Zapisz</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

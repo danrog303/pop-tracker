@@ -1,0 +1,151 @@
+<div class="modal modal-open">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">
+            <ng-container *ngIf="editMode">Edytuj przedmiot</ng-container>
+            <ng-container *ngIf="!editMode">Dodaj nowy przedmiot</ng-container>
+        </h3>
+
+        <form #subcategoryItemEditForm="ngForm" (ngSubmit)="onSaveItem(subcategoryItemEditForm)">
+            <div class="py-4">
+                <div class="form-control w-full max-w-xs">
+                    <label class="label" for="shelf-item-edit-name">
+                        <span class="label-text">
+                          <ng-container>Tytuł (nazwa)</ng-container> (*)
+                        </span>
+                    </label>
+                    <input type="text" class="input input-bordered w-full max-w-xs"
+                           [ngModel]="editedItem?.name" required minlength="3" maxlength="128" name="name"
+                           id="shelf-item-edit-name"/>
+                </div>
+
+                <div class="form-control w-full max-w-xs">
+                    <label class="label" for="shelf-item-edit-status">
+                        <span class="label-text">
+                          <ng-container>Status</ng-container> (*)
+                        </span>
+                    </label>
+                    <select class="select select-bordered" [(ngModel)]="chosenItemStatus" required name="status" id="shelf-item-edit-status">
+                        <option value="PLANNED">Planowany</option>
+                        <option value="FINISHED">Ukończony</option>
+                        <option value="STALLED">Wstrzymany</option>
+                        <option value="DROPPED">Porzucony</option>
+                        <option value="INPROGRESS">W trakcie</option>
+                    </select>
+                </div>
+
+<!--                <div class="form-control w-full max-w-xs" *ngIf="chosenItemStatus === 'FINISHED'">-->
+<!--                    <label class="label" for="shelf-item-edit-finished-count">-->
+<!--                        <span class="label-text">How many times completed?</span>-->
+<!--                    </label>-->
+<!--                    <input type="number" class="input input-bordered w-full max-w-xs"-->
+<!--                           id="shelf-item-edit-finished-count"-->
+<!--                           required [ngModel]="editedItem?.finishedCount ?? 1" min="1" max="2000" name="finishedCount"/>-->
+<!--                </div>-->
+
+                <ng-container *ngIf="chosenItemStatus !== 'PLANNED'">
+                    <label class="label" for="shelf-item-edit-rating">
+                        <span class="label-text">Rate the item</span>
+                    </label>
+
+                    <div class="rating rating-lg rating-half" id="shelf-item-edit-rating">
+                        <input type="radio" name="rating" ngModel value="0" class="rating-hidden" checked/>
+                        <input type="radio" name="rating" ngModel value="1"
+                               class="bg-primary mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating" ngModel value="2"
+                               class="bg-primary mask mask-star-2 mask-half-2"/>
+                        <input type="radio" name="rating" ngModel value="3"
+                               class="bg-primary mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating" ngModel value="4"
+                               class="bg-primary mask mask-star-2 mask-half-2"/>
+                        <input type="radio" name="rating" ngModel value="5"
+                               class="bg-primary mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating" ngModel value="6"
+                               class="bg-primary mask mask-star-2 mask-half-2"/>
+                        <input type="radio" name="rating" ngModel value="7"
+                               class="bg-primary mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating" ngModel value="8"
+                               class="bg-primary mask mask-star-2 mask-half-2"/>
+                        <input type="radio" name="rating" ngModel value="9"
+                               class="bg-primary mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating" ngModel value="10"
+                               class="bg-primary mask mask-star-2 mask-half-2"/>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.MOVIE">
+                <label class="label" for="shelf-item-edit-director">
+                        <span class="label-text">
+                          <ng-container>Reżyser</ng-container> (*)
+                        </span>
+                </label>
+                <input type="text" class="input input-bordered w-full max-w-xs"
+                       [ngModel]="editedItem?.director" required minlength="3" maxlength="128" name="director"
+                       id="shelf-item-edit-director"/>
+            </div>
+
+            <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.GAME">
+                <label class="label" for="shelf-item-edit-platform">
+                        <span class="label-text">
+                          <ng-container>Platforma</ng-container> (*)
+                        </span>
+                </label>
+                <input type="text" class="input input-bordered w-full max-w-xs"
+                       [ngModel]="editedItem?.platform" required minlength="3" maxlength="128" name="platform"
+                       id="shelf-item-edit-platform" placeholder="np. Steam"/>
+            </div>
+
+            <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.GAME">
+                <label class="label" for="shelf-item-edit-percentage">
+                        <span class="label-text">
+                          <ng-container>Procent przejścia (1-100%)</ng-container> (*)
+                        </span>
+                </label>
+                <input type="number" class="input input-bordered w-full max-w-xs"
+                       [ngModel]="editedItem?.percentage" required min="1" max="100" name="percentage"
+                       id="shelf-item-edit-percentage" placeholder="Jak duży % gry przeszedłeś"/>
+            </div>
+
+            <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.BOOK">
+                <label class="label" for="shelf-item-edit-author">
+                        <span class="label-text">
+                          <ng-container>Autor</ng-container> (*)
+                        </span>
+                </label>
+                <input type="text" class="input input-bordered w-full max-w-xs"
+                       [ngModel]="editedItem?.author" required minlength="3" maxlength="128" name="author"
+                       id="shelf-item-edit-author"/>
+            </div>
+
+
+            <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.BOOK">
+                <label class="label" for="shelf-item-edit-pages-number">
+                        <span class="label-text">
+                          <ng-container>Liczba stron</ng-container> (*)
+                        </span>
+                </label>
+                <input type="text" class="input input-bordered w-full max-w-xs"
+                       [ngModel]="editedItem?.pagesNumber" required min="1" max="100000000" name="pagesNumber"
+                       id="shelf-item-edit-pages-number"/>
+            </div>
+
+            <p class="text-error pt-3" *ngIf="error">
+                Wystąpił błąd podczas zapisywania przedmiotu. Sprawdź jakość swojego połączenia z internetem
+                lub skontaktuj się z administratorem.
+            </p>
+
+            <p class="pt-3" *ngIf="quotaExceeded">
+                You have exceeded the allowed number of items on this shelf.
+                You need to remove some to be able to create a new one.
+            </p>
+
+            <div class="modal-action">
+                <button class="btn" type="button" (click)="this.close.emit()">Anuluj</button>
+                <button class="btn" type="submit" [disabled]="!subcategoryItemEditForm.valid || pending">
+                    <span *ngIf="!pending">Zapisz</span>
+                    <app-spinner *ngIf="pending"/>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

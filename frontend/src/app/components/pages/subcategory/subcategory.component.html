@@ -1,0 +1,14 @@
+<div class="card w-96 bg-base-100 shadow-xl m-3 text-center border-2">
+  <div class="card-body items-center">
+    <div class="w-24">
+      <div class="rounded-xl">
+        <img src="/assets/icons/icon-{{ subcategoryType.toString() | lowercase }}.png" />
+      </div>
+    </div>
+
+    <h2 class="card-title">{{ subcategoryName }}</h2>
+    <div class="card-actions">
+      <a class="btn btn-primary" [routerLink]="['/subcategories', subcategoryId]">Przejdź do edytora</a>
+    </div>
+  </div>
+</div>

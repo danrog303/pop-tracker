@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {AuthenticationService} from "./services/authentication.service";
+import {NavbarComponent} from "./components/common/navbar/navbar.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [RouterOutlet, NavbarComponent],
+  templateUrl: './app.component.html'
 })
-export class AppComponent {
-  title = 'pop-tracker';
+export class AppComponent implements OnInit {
+  constructor(private authService: AuthenticationService) {
+  }
+
+  ngOnInit(): void {
+    this.authService.autoLogin();
+  }
 }

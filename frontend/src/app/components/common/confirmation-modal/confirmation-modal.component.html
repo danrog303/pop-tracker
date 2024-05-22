@@ -1,0 +1,16 @@
+<div class="modal modal-open">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">{{ heading }}</h3>
+    <p class="py-4">
+      {{ description }}
+    </p>
+    <div class="modal-action">
+      <button class="btn" (click)="onModalClose()">Cancel</button>
+
+      <button class="btn btn-primary" (click)="onActionConfirmed()" [disabled]="pending">
+        <span *ngIf="!pending">{{ actionName }}</span>
+        <app-spinner *ngIf="pending" />
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+
+<app-confirmation-modal actionName="Usuń przedmiot"
+                        heading="Czy jesteś pewien?"
+                        description="Czy jesteś pewien, że chcesz to usunąć?"
+                        [pending]="deleting"
+                        (actionConfirmed)="onDeleteItem()"
+                        (close)="onCancel()" />
