@@ -2,13 +2,13 @@
     <div class="modal-box">
         <h3 class="font-bold text-lg">Jesteś pewien?</h3>
         <p class="py-4">
-            Czy na pewno chcesz usunąć tę podkategorie?
-            Wraz z podkategorią zostaną usunięte wszystkie elementy w tej podkategorii.
+            Czy na pewno chcesz usunąć tę listę?
+            Wraz z listą zostaną usunięte wszystkie elementy na tej liście.
         </p>
         <div class="modal-action">
             <button class="btn" (click)="onCancel()">Cancel</button>
             <button class="btn btn-primary" (click)="onDeleteSubcategory()" [disabled]="deleting">
-                <span *ngIf="!deleting">Usuń podkategorię</span>
+                <span *ngIf="!deleting">Usuń listę</span>
                 <app-spinner *ngIf="deleting" />
             </button>
         </div>

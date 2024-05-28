@@ -5,20 +5,21 @@
         <app-icon-hamburger />
       </label>
       <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a routerLink="/">Strona główna</a></li>
-        <li><a routerLink="/subcategories">Edytor</a></li>
+        <li><a routerLink="/" *ngIf="!isUserAuthenticated">Strona główna</a></li>
+        <li><a routerLink="/subcategories" *ngIf="!isUserAuthenticated">Edytor list</a></li>
       </ul>
     </div>
     <a class="btn btn-ghost normal-case text-xl" routerLink="/">PopTracker</a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1" *ngIf="isUserAuthenticated">
-      <li><a routerLink="/">Strona główna</a></li>
-      <li><a routerLink="/subcategories">Edytor</a></li>
+      <li><a routerLink="/" *ngIf="!isUserAuthenticated">Strona główna</a></li>
+      <li><a routerLink="/subcategories" *ngIf="!isUserAuthenticated">Edytor list</a></li>
     </ul>
   </div>
   <div class="navbar-end">
     <button (click)="onUserLogin()" *ngIf="!isUserAuthenticated" class="btn-sm btn btn-primary">(Zaloguj mnie)</button>
+    <button (click)="onUserRegister()" *ngIf="!isUserAuthenticated" class="btn-sm btn btn-primary ml-1">(Zarejestruj mnie)</button>
     <button (click)="onUserLogout()" *ngIf="isUserAuthenticated" class="btn-sm btn btn-primary">(Wyloguj mnie</button>
   </div>
 </div>

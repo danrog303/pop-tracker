@@ -28,6 +28,18 @@ export class AuthenticationService {
   }
 
   /**
+   * Sends user to the registration website.
+   */
+  redirectToRegistrationEndpoint() {
+    const authenticationUrl = new URL(environment.oauth2.registerEndpoint);
+    authenticationUrl.searchParams.append("client_id", environment.oauth2.clientId);
+    authenticationUrl.searchParams.append("response_type", "code");
+    authenticationUrl.searchParams.append("scope","email openid phone");
+    authenticationUrl.searchParams.append("redirect_uri", environment.oauth2.redirectUrl);
+    window.location.href = authenticationUrl.href;
+  }
+
+  /**
    * Exchanges oauth2 authorization code for access & refresh tokens.
    */
   exchangeAuthorizationCodeForTokens(oauth2AuthorizationCode: string) {

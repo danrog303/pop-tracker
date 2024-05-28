@@ -44,7 +44,7 @@
 
                 <ng-container *ngIf="chosenItemStatus !== 'PLANNED'">
                     <label class="label" for="shelf-item-edit-rating">
-                        <span class="label-text">Rate the item</span>
+                        <span class="label-text">Twoja ocena</span>
                     </label>
 
                     <div class="rating rating-lg rating-half" id="shelf-item-edit-rating">
@@ -76,44 +76,44 @@
             <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.MOVIE">
                 <label class="label" for="shelf-item-edit-director">
                         <span class="label-text">
-                          <ng-container>Reżyser</ng-container> (*)
+                          <ng-container>Reżyser</ng-container>
                         </span>
                 </label>
                 <input type="text" class="input input-bordered w-full max-w-xs"
-                       [ngModel]="editedItem?.director" required minlength="3" maxlength="128" name="director"
+                       [ngModel]="editedItem?.director" minlength="3" maxlength="128" name="director"
                        id="shelf-item-edit-director"/>
             </div>
 
             <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.GAME">
                 <label class="label" for="shelf-item-edit-platform">
                         <span class="label-text">
-                          <ng-container>Platforma</ng-container> (*)
+                          <ng-container>Platforma</ng-container>
                         </span>
                 </label>
                 <input type="text" class="input input-bordered w-full max-w-xs"
-                       [ngModel]="editedItem?.platform" required minlength="3" maxlength="128" name="platform"
+                       [ngModel]="editedItem?.platform" minlength="3" maxlength="128" name="platform"
                        id="shelf-item-edit-platform" placeholder="np. Steam"/>
             </div>
 
             <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.GAME">
                 <label class="label" for="shelf-item-edit-percentage">
                         <span class="label-text">
-                          <ng-container>Procent przejścia (1-100%)</ng-container> (*)
+                          <ng-container>Procent przejścia (0-100%)</ng-container>
                         </span>
                 </label>
                 <input type="number" class="input input-bordered w-full max-w-xs"
-                       [ngModel]="editedItem?.percentage" required min="1" max="100" name="percentage"
+                       [ngModel]="editedItem?.percentage" min="0" max="100" name="percentage"
                        id="shelf-item-edit-percentage" placeholder="Jak duży % gry przeszedłeś"/>
             </div>
 
             <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.BOOK">
                 <label class="label" for="shelf-item-edit-author">
                         <span class="label-text">
-                          <ng-container>Autor</ng-container> (*)
+                          <ng-container>Autor</ng-container>
                         </span>
                 </label>
                 <input type="text" class="input input-bordered w-full max-w-xs"
-                       [ngModel]="editedItem?.author" required minlength="3" maxlength="128" name="author"
+                       [ngModel]="editedItem?.author" minlength="3" maxlength="128" name="author"
                        id="shelf-item-edit-author"/>
             </div>
 
@@ -121,11 +121,11 @@
             <div class="form-control w-full max-w-xs" *ngIf="subcategoryType == SubcategoryType.BOOK">
                 <label class="label" for="shelf-item-edit-pages-number">
                         <span class="label-text">
-                          <ng-container>Liczba stron</ng-container> (*)
+                          <ng-container>Liczba stron</ng-container>
                         </span>
                 </label>
                 <input type="text" class="input input-bordered w-full max-w-xs"
-                       [ngModel]="editedItem?.pagesNumber" required min="1" max="100000000" name="pagesNumber"
+                       [ngModel]="editedItem?.pagesNumber" min="1" max="100000000" name="pagesNumber"
                        id="shelf-item-edit-pages-number"/>
             </div>
 

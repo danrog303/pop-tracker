@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {CommonModule, NgIf} from "@angular/common";
 
 @Component({
@@ -12,14 +12,24 @@ import {CommonModule, NgIf} from "@angular/common";
 export class HomepageComponent implements OnInit {
   isUserAuthenticated: boolean = false;
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    this.authService.authenticatedUser.subscribe(user => this.isUserAuthenticated = !!user);
+    this.authService.authenticatedUser.subscribe(user => {
+      this.isUserAuthenticated = !!user;
+      if (this.isUserAuthenticated) {
+        this.router.navigate(["/subcategories"]).then();
+      }
+    });
   }
 
   onAuthenticate() {
     this.authService.redirectToAuthenticationEndpoint();
+  }
+
+  onRegister() {
+    this.authService.redirectToRegistrationEndpoint();
   }
 }

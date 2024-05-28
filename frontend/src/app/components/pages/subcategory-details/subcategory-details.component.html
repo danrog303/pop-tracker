@@ -3,17 +3,21 @@
 <div class="flex flex-row-reverse p-5" *ngIf="!error">
     <button class="btn btn-sm gap-2 mx-2" (click)="onSubcategoryDelete()">
         <app-icon-delete />
-        <ng-container>Usuń podkategorię</ng-container>
+        <ng-container>Usuń listę</ng-container>
     </button>
 
     <button class="btn btn-sm gap-2 mx-2" (click)="onSubcategoryEdit()">
         <app-icon-edit />
-        <ng-container>Edytuj podkategorię</ng-container>
+        <ng-container>Edytuj listę</ng-container>
     </button>
 
     <button class="btn btn-sm gap-2 mx-2" (click)="onSubcategoryItemCreate()">
         <app-icon-add />
-        <ng-container>Dodaj nowy obiekt</ng-container>
+        <ng-container>
+          {{ subcategory?.type === SubcategoryType.BOOK ? 'Dodaj nową książkę' : '' }}
+          {{ subcategory?.type === SubcategoryType.GAME ? 'Dodaj nową grę' : '' }}
+          {{ subcategory?.type === SubcategoryType.MOVIE ? 'Dodaj nowy film' : '' }}
+        </ng-container>
     </button>
 
     <label class="input input-sm input-bordered flex items-center gap-2">
@@ -69,7 +73,7 @@
                 <span *ngSwitchCase="'DROPPED'" class="badge badge-error gap-2">Porzucony</span>
                 <span *ngSwitchCase="'FINISHED'" class="badge badge-success gap-2">Ukończony</span>
                 <span *ngSwitchCase="'STALLED'" class="badge badge-warning gap-2">Wstrzymany</span>
-                <span *ngSwitchCase="'IN_PROGRESS'" class="badge badge-primary gap-2">W trakcie</span>
+                <span *ngSwitchCase="'INPROGRESS'" class="badge badge-primary gap-2">W trakcie</span>
             </td>
 
             <td>

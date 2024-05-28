@@ -11,8 +11,12 @@
             Zaloguj się
           </button>
 
+          <button class="btn btn-primary ml-1" (click)="onRegister()" *ngIf="!isUserAuthenticated">
+            Zarejestruj się
+          </button>
+
           <a class="btn btn-primary" routerLink="/subcategories" *ngIf="isUserAuthenticated">
-            Przejdź do aplikacji
+            Przejdź do edytora list
           </a>
         </div>
       </div>

@@ -6,6 +6,7 @@ export const environment = {
     clientId: "4tn3rmi2qbssa2ac9vgqqtib9c",
     redirectUrl: "http://localhost:4200/auth/oauth2",
     authEndpoint: "https://poptracker.auth.eu-central-1.amazoncognito.com/login",
+    registerEndpoint: "https://poptracker.auth.eu-central-1.amazoncognito.com/signup",
     authTokenEndpoint: "https://poptracker.auth.eu-central-1.amazoncognito.com/oauth2/token"
   }
 };

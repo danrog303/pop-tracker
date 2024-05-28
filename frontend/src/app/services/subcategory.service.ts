@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable, onErrorResumeNext, retry} from "rxjs";
 
 import {environment} from "../../environments/environment";
 import Subcategory from "../models/subcategory.model";
@@ -24,10 +24,12 @@ export class SubcategoryService {
 
     if (create) {
       const endpoint = `${environment.popTracker.apiEndpoint}/subcategories`;
-      return this.http.post<Subcategory>(endpoint, subcategory);
+      return this.http.post<Subcategory>(endpoint, subcategory).pipe(
+        retry(5)
+      );
     } else {
       const endpoint = `${environment.popTracker.apiEndpoint}/subcategories/${subcategory.subcategoryId}`;
-      return this.http.put<Subcategory>(endpoint, subcategory);
+      return this.http.put<Subcategory>(endpoint, subcategory).pipe(retry(5));
     }
   }
 

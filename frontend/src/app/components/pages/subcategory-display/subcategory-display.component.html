@@ -6,14 +6,14 @@
 
   <ng-container *ngIf="!error">
     <div *ngIf="subcategories.length === 0" class="card w-96 bg-base-100 shadow-xl m-3 mt-5 text-center border-2 p-4">
-      <h3 class="text-lg font-semibold">Brak podkategorii</h3>
-      <p>Nie masz jeszcze żadnych podkategorii. Utwórz jakąś.</p>
-      <button class="btn btn-primary" (click)="onSubcategoryCreate()">Utwórz podkategorię</button>
+      <h3 class="text-lg font-semibold">Brak list</h3>
+      <p>Nie masz jeszcze żadnych list. Utwórz jakąś.</p>
+      <button class="btn btn-primary" (click)="onSubcategoryCreate()">Nowa lista</button>
     </div>
 
     <button class="btn gap-2 btn-outline hover:btn-primary" *ngIf="subcategories.length >= 1" (click)="onSubcategoryCreate()">
       <span class="font-extrabold">+</span>
-      <ng-container>Utwórz</ng-container>
+      <ng-container>Nowa lista</ng-container>
     </button>
 
     <app-subcategory-edit *ngIf="subcategoryCreating" (close)="subcategoryCreating = false" (subcategoryCreated)="fetchSubcategories()"/>
