@@ -8,11 +8,7 @@ import {SpinnerComponent} from "../../common/spinner/spinner";
 @Component({
     selector: 'app-subcategory-edit',
     templateUrl: 'subcategory-edit.component.html',
-    imports: [
-        FormsModule,
-        NgIf,
-        SpinnerComponent
-    ],
+    imports: [FormsModule, NgIf, SpinnerComponent],
     standalone: true
 })
 export class SubcategoryEditComponent implements OnInit {

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {Router, RouterLink} from "@angular/router";
-import {CommonModule, NgIf} from "@angular/common";
+import {CommonModule, NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, NgOptimizedImage],
   standalone: true
 })
 export class HomepageComponent implements OnInit {

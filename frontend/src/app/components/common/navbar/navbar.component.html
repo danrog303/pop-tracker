@@ -9,7 +9,9 @@
         <li><a routerLink="/subcategories" *ngIf="!isUserAuthenticated">Edytor list</a></li>
       </ul>
     </div>
-    <a class="btn btn-ghost normal-case text-xl" routerLink="/">PopTracker</a>
+    <a class="btn btn-ghost normal-case text-xl" routerLink="/">
+      <img src="/assets/pop-tracker.svg" alt="PopTracker" style="width: 128px;" />
+    </a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1" *ngIf="isUserAuthenticated">
